@@ -1,0 +1,33 @@
+{
+  "name": "express-babel-webpack",
+  "version": "0.0.1",
+  "description": "express with babel and webpack",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "nodemon --exec babel-node src/server.js",
+    "build": "babel src —-out-dir dist",
+    "serve": "node dist/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TonyWar/express-babel-webpack.git"
+  },
+  "keywords": [
+    "express",
+    "babel",
+    "webpack"
+  ],
+  "author": "TonyW",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/TonyWar/express-babel-webpack/issues"
+  },
+  "homepage": "https://github.com/TonyWar/express-babel-webpack#readme",
+  "dependencies": {
+    "@babel/cli": "^7.1.2",
+    "@babel/core": "^7.1.2",
+    "@babel/node": "^7.0.0",
+    "@babel/preset-env": "^7.1.0",
+    "nodemon": "^1.18.5"
+  }
+}
