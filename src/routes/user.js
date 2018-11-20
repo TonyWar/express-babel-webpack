@@ -4,24 +4,34 @@ const router = express.Router()
 
 import mongoose from 'mongoose'
 import User from '../models/user'
+import validate from '../libs/validator'
+import errorHandler from '../middlewares/error-handler'
 
-router.post('/signup', function(req, res) {
-    const user = new User({
-        _id: new  mongoose.Types.ObjectId(),
-        email: req.body.email,
-        password: req.body.password    
-    });
-    user.save().then(function(result) {
-        console.log(result);
-        res.status(200).json({
-          success: 'New user has been created'
-        });
-    }).catch(error => {
-        res.status(500).json({
-          error: err
-        });
-    });
-});
+const validateUser = (email, password) => {
+  return validate(email).is.email
+    && validate(password).is.password
+}
+
+const beforeSignUp = (req, res, next) => {
+  const { email, password } = req.body
+  if (!validateUser(email, password)) {
+    return res.status(400).json({
+      message: 'wrong data'
+    })
+  }
+  next();
+}
+
+router.post('/sign-up', beforeSignUp, errorHandler(async (req, res, next) => {
+  const { email, password } = req.body
+
+  const user = new User({ _id: new mongoose.Types.ObjectId(), email, password });
+  await user.save()
+
+  res.status(201).json({
+    success: 'New user has been created'
+  });
+}));
 
 module.exports = router;
 

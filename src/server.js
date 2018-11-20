@@ -2,6 +2,7 @@ import express from 'express';
 import bodyParser from 'body-parser'
 import mongoose from 'mongoose'
 import user from './routes/user'
+import morgan from 'morgan'
 
 mongoose.connect('mongodb://127.0.0.1:27017/jwtauth', err => {
   console.log('error', err)
